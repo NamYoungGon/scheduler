@@ -1,0 +1,48 @@
+.f-r {
+    text-align: right;
+}
+.f-l {
+    text-align: left;
+}
+.f-c {
+    text-align: center;
+}
+
+.field-group {
+    clear: both;
+    position: relative;
+    width: 100%;
+    padding-left: 110px;
+}
+
+.field-group::before {
+    content: "";
+    display: table;
+}
+
+.field-group::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.field-group input {
+    width: 100%;
+}
+
+.field-group label {
+    color: #888585;
+    width: 110px;
+    margin-left: -110px;
+    padding-right:20px;
+    float: left;
+    position: relative;
+}
+
+input.date {
+    width: 94px;
+}
+
+button + button, button + span, span + button {
+    margin-left: 5px;
+}
