@@ -12,6 +12,21 @@
     vertical-align: top;
 }
 
+.event-pnl {
+    height: 22px;
+    margin: 0;
+    position: relative;
+    background-color: #fff;
+}
+
+.event-1-7 { width: 99%; }
+.event-2-7 { width: 199%; }
+.event-3-7 { width: 299%; }
+.event-4-7 { width: 399%; }
+.event-5-7 { width: 499%; }
+.event-6-7 { width: 599%; }
+.event-7-7 { width: 699%; }
+
 span.dim {
     color: #bfbfbf;
 }
