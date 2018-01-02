@@ -10,13 +10,15 @@
     height: 100px;
     padding: 2px 0 0;
     vertical-align: top;
+    position: relative;
 }
 
 .event-pnl {
     height: 22px;
     margin: 0;
+    margin-top: 25px;
     position: absolute;
-    background-color: #fff;
+    background-color: rgb(255, 240, 240);
 }
 
 .event-1-7 { width: 99%; }

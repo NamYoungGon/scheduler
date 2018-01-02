@@ -131,13 +131,20 @@ const data = {
             startDate: '2017-11-25',
             endDate: '2017-12-04',
             summary: '123123123'
+        },
+        {
+            valueOf: 1514362457537,
+            who: 'Young',
+            startDate: '2017-12-04',
+            endDate: '2017-12-12',
+            summary: 'Young'
         }
     ],
     '2017-12-05': [
         {
             valueOf: 1514362457537,
             who: 'Young',
-            startDate: '2017-12-05',
+            startDate: '2017-12-04',
             endDate: '2017-12-12',
             summary: 'Young'
         }
@@ -146,34 +153,55 @@ const data = {
         {
             valueOf: 1514362457537,
             who: 'Young',
-            startDate: '2017-12-05',
+            startDate: '2017-12-04',
             endDate: '2017-12-12',
             summary: 'Young'
+        },
+        {
+            valueOf: 1514897641344,
+            who: 'Gon',
+            startDate: '2017-12-06',
+            endDate: '2017-12-06',
+            summary: 'Gon'
         }
     ],
     '2017-12-07': [
         {
             valueOf: 1514362457537,
             who: 'Young',
-            startDate: '2017-12-05',
+            startDate: '2017-12-04',
             endDate: '2017-12-12',
             summary: 'Young'
+        },
+        {
+            valueOf: 1514899164639,
+            who: 'Gon2',
+            startDate: '2017-12-07',
+            endDate: '2017-12-08',
+            summary: 'Gon2'
         }
     ],
     '2017-12-08': [
         {
             valueOf: 1514362457537,
             who: 'Young',
-            startDate: '2017-12-05',
+            startDate: '2017-12-04',
             endDate: '2017-12-12',
             summary: 'Young'
+        },
+        {
+            valueOf: 1514899164639,
+            who: 'Gon2',
+            startDate: '2017-12-07',
+            endDate: '2017-12-08',
+            summary: 'Gon2'
         }
     ],
     '2017-12-09': [
         {
             valueOf: 1514362457537,
             who: 'Young',
-            startDate: '2017-12-05',
+            startDate: '2017-12-04',
             endDate: '2017-12-12',
             summary: 'Young'
         }
@@ -182,7 +210,7 @@ const data = {
         {
             valueOf: 1514362457537,
             who: 'Young',
-            startDate: '2017-12-05',
+            startDate: '2017-12-04',
             endDate: '2017-12-12',
             summary: 'Young'
         }
@@ -191,7 +219,7 @@ const data = {
         {
             valueOf: 1514362457537,
             who: 'Young',
-            startDate: '2017-12-05',
+            startDate: '2017-12-04',
             endDate: '2017-12-12',
             summary: 'Young'
         }
@@ -200,7 +228,7 @@ const data = {
         {
             valueOf: 1514362457537,
             who: 'Young',
-            startDate: '2017-12-05',
+            startDate: '2017-12-04',
             endDate: '2017-12-12',
             summary: 'Young'
         }
@@ -512,15 +540,14 @@ class Calendar extends Component {
                         // continue event
                         if (startDate !== endDate) {
                             const [startYear, startMonth, startDay] = [year, month, day]
-                            const [endYear, endMonth, endDay] = endDate.split('-')
+                            let [endYear, endMonth, endDay] = endDate.split('-')
+                            let diff
 
-                            if (startYear === endYear && startMonth === endMonth) {   
-                                let diff = parseInt(endDay, 10) - parseInt(startDay, 10)
-                                if (diff + j > 7 - j) {
-                                    diff = 7 - j
-                                } else {
-                                    diff = diff + 1
+                            if (startYear === endYear && startMonth === endMonth) {
+                                if (parseInt(startDay, 10) + 7 - j - 1 < parseInt(endDay, 10)) {
+                                    endDay = parseInt(startDay, 10) + 7 - j - 1
                                 }
+                                diff = parseInt(endDay, 10) - parseInt(startDay, 10) + 1
 
                                 event.display = true
                                 event.width = diff
@@ -536,7 +563,7 @@ class Calendar extends Component {
 
                                 diffLastDate - parseInt(startDay)
 
-                                let diff = diffLastDate - parseInt(startDay, 10) + parseInt(endDay, 10)
+                                diff = diffLastDate - parseInt(startDay, 10) + parseInt(endDay, 10)
                                 if (diff + j > 7 - j) {
                                     diff = 7 - j
                                 } else {
@@ -549,27 +576,93 @@ class Calendar extends Component {
                                 continueEvent[valueOf] = true
                             }
 
-                            event.row = 0
+                            let isFind = false
+                            let row = 0
+                            let eventGridCellLen = eventGridCell.length
+
+                            for (let index = 0; index < eventGridCellLen; index++) {
+                                if (!eventGridCell[index]) {
+                                    let isBreak = false
+                                    for (let l = 0, tmpEventGridCell; l < diff; l++) {
+                                        tmpEventGridCell = eventGrid[i][j + l]
+                                        if (tmpEventGridCell[index]) {
+                                            isBreak = true
+                                            break
+                                        }
+                                    }
+
+                                    if (isBreak) break
+
+                                    for (let l = 0, tmpEventGridCell; l < diff; l++) {
+                                        tmpEventGridCell = eventGrid[i][j + l]
+                                        tmpEventGridCell[index] = true
+                                    }
+
+                                    isFind = true
+                                    row = index
+                                }
+                            }
+
+                            // eventGridCell.forEach((isUsed, index) => {
+                            //     if (!isUsed) {
+                            //         for (let l = 0, tmpEventGridCell; l < diff; l++) {
+                            //             tmpEventGridCell = eventGrid[i][j + l]
+                            //             if (tmpEventGridCell[index]) {
+                            //                 return true
+                            //             }
+                            //         }
+
+                            //         for (let l = 0, tmpEventGridCell; l < diff; l++) {
+                            //             tmpEventGridCell = eventGrid[i][j + l]
+                            //             tmpEventGridCell[index] = true
+                            //         }
+
+                            //         isFind = true
+                            //         row = index
+                            //     }
+                            // })
+
+                            if (!isFind) {
+                                let index
+                                for (let l = 0, tmpEventGridCell; l < diff; l++) {
+                                    tmpEventGridCell = eventGrid[i][j + l]
+                                    if (tmpEventGridCell[eventGridCellLen + l]) {
+                                        continue
+                                    }
+
+                                    index = eventGridCellLen + l
+                                    break
+                                }
+
+                                for (let l = 0, tmpEventGridCell; l < diff; l++) {
+                                    tmpEventGridCell = eventGrid[i][j + l]
+                                    tmpEventGridCell[index] = true
+                                }
+
+                                row = index
+                            }
+
+                            event.row = row
                         } else {
                             let isFind = false
                             let row = 0
-                            let eventGridCellLen = 0
+                            let eventGridCellLen = eventGridCell.length
 
-                            eventGridCell.forEach((isUsed, index) => {
-                                if (!isUsed) {
+                            for (let index = 0; index < eventGridCellLen; index++) {
+                                if (!eventGridCell[index]) {
                                     isFind = true
                                     eventGridCell[index] = true
                                     row = index
+
+                                    break;
                                 }
-                                eventGridCellLen++
-                            })
+                            }
 
                             if (!isFind) {
-                                eventGridCell[0] = true
+                                eventGridCell[eventGridCellLen] = true
                                 row = eventGridCellLen
                             }
                             
-
                             event.display = true
                             event.width = 1
                             event.row = row
