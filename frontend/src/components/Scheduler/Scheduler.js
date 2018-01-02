@@ -5,6 +5,265 @@ import { addLeadingZero } from './../../lib/time';
 import { setPopup } from './../../lib/popup';
 import './index.css';
 
+const data = {
+    '2017-12-27': [
+        {
+            valueOf: 1514362423935,
+            who: 'Nam',
+            startDate: '2017-12-27',
+            endDate: '2017-12-27',
+            summary: 'Nam'
+        },
+        {
+            valueOf: 1514362444722,
+            who: 'Young',
+            startDate: '2017-12-27',
+            endDate: '2017-12-27',
+            summary: 'Young'
+        }
+    ],
+    '2017-11-25': [
+        {
+            valueOf: 1514365608904,
+            who: 'Young',
+            startDate: '2017-11-25',
+            endDate: '2017-12-04',
+            summary: '123123123'
+        }
+    ],
+    '2017-11-26': [
+        {
+            valueOf: 1514365608904,
+            who: 'Young',
+            startDate: '2017-11-25',
+            endDate: '2017-12-04',
+            summary: '123123123'
+        }
+    ],
+    '2017-11-27': [
+        {
+            valueOf: 1514365608904,
+            who: 'Young',
+            startDate: '2017-11-25',
+            endDate: '2017-12-04',
+            summary: '123123123'
+        },
+        {
+            valueOf: 1514879765598,
+            who: 'Young',
+            startDate: '2017-11-27',
+            endDate: '2017-11-29',
+            summary: '123123123'
+        }
+    ],
+    '2017-11-28': [
+        {
+            valueOf: 1514365608904,
+            who: 'Young',
+            startDate: '2017-11-25',
+            endDate: '2017-12-04',
+            summary: '123123123'
+        },
+        {
+            valueOf: 1514879765598,
+            who: 'Young',
+            startDate: '2017-11-27',
+            endDate: '2017-11-29',
+            summary: '123123123'
+        }
+    ],
+    '2017-11-29': [
+        {
+            valueOf: 1514365608904,
+            who: 'Young',
+            startDate: '2017-11-25',
+            endDate: '2017-12-04',
+            summary: '123123123'
+        },
+        {
+            valueOf: 1514879765598,
+            who: 'Young',
+            startDate: '2017-11-27',
+            endDate: '2017-11-29',
+            summary: '123123123'
+        }
+    ],
+    '2017-11-30': [
+        {
+            valueOf: 1514365608904,
+            who: 'Young',
+            startDate: '2017-11-25',
+            endDate: '2017-12-04',
+            summary: '123123123'
+        }
+    ],
+    '2017-12-01': [
+        {
+            valueOf: 1514365608904,
+            who: 'Young',
+            startDate: '2017-11-25',
+            endDate: '2017-12-04',
+            summary: '123123123'
+        }
+    ],
+    '2017-12-02': [
+        {
+            valueOf: 1514365608904,
+            who: 'Young',
+            startDate: '2017-11-25',
+            endDate: '2017-12-04',
+            summary: '123123123'
+        }
+    ],
+    '2017-12-03': [
+        {
+            valueOf: 1514365608904,
+            who: 'Young',
+            startDate: '2017-11-25',
+            endDate: '2017-12-04',
+            summary: '123123123'
+        }
+    ],
+    '2017-12-04': [
+        {
+            valueOf: 1514365608904,
+            who: 'Young',
+            startDate: '2017-11-25',
+            endDate: '2017-12-04',
+            summary: '123123123'
+        }
+    ],
+    '2017-12-05': [
+        {
+            valueOf: 1514362457537,
+            who: 'Young',
+            startDate: '2017-12-05',
+            endDate: '2017-12-12',
+            summary: 'Young'
+        }
+    ],
+    '2017-12-06': [
+        {
+            valueOf: 1514362457537,
+            who: 'Young',
+            startDate: '2017-12-05',
+            endDate: '2017-12-12',
+            summary: 'Young'
+        }
+    ],
+    '2017-12-07': [
+        {
+            valueOf: 1514362457537,
+            who: 'Young',
+            startDate: '2017-12-05',
+            endDate: '2017-12-12',
+            summary: 'Young'
+        }
+    ],
+    '2017-12-08': [
+        {
+            valueOf: 1514362457537,
+            who: 'Young',
+            startDate: '2017-12-05',
+            endDate: '2017-12-12',
+            summary: 'Young'
+        }
+    ],
+    '2017-12-09': [
+        {
+            valueOf: 1514362457537,
+            who: 'Young',
+            startDate: '2017-12-05',
+            endDate: '2017-12-12',
+            summary: 'Young'
+        }
+    ],
+    '2017-12-10': [
+        {
+            valueOf: 1514362457537,
+            who: 'Young',
+            startDate: '2017-12-05',
+            endDate: '2017-12-12',
+            summary: 'Young'
+        }
+    ],
+    '2017-12-11': [
+        {
+            valueOf: 1514362457537,
+            who: 'Young',
+            startDate: '2017-12-05',
+            endDate: '2017-12-12',
+            summary: 'Young'
+        }
+    ],
+    '2017-12-12': [
+        {
+            valueOf: 1514362457537,
+            who: 'Young',
+            startDate: '2017-12-05',
+            endDate: '2017-12-12',
+            summary: 'Young'
+        }
+    ],
+    '2017-12-29': [
+        {
+            valueOf: 1514879456537,
+            who: 'Young',
+            startDate: '2017-12-29',
+            endDate: '2018-01-03',
+            summary: 'Young'
+        }
+    ],
+    '2017-12-30': [
+        {
+            valueOf: 1514879456537,
+            who: 'Young',
+            startDate: '2017-12-29',
+            endDate: '2018-01-03',
+            summary: 'Young'
+        }
+    ],
+    '2017-12-31': [
+        {
+            valueOf: 1514879456537,
+            who: 'Young',
+            startDate: '2017-12-29',
+            endDate: '2018-01-03',
+            summary: 'Young'
+        }
+    ],
+    '2018-01-01': [
+        {
+            valueOf: 1514879456537,
+            who: 'Young',
+            startDate: '2017-12-29',
+            endDate: '2018-01-03',
+            summary: 'Young'
+        }
+    ],
+    '2018-01-02': [
+        {
+            valueOf: 1514879456537,
+            who: 'Young',
+            startDate: '2017-12-29',
+            endDate: '2018-01-03',
+            summary: 'Young'
+        }
+    ],
+    '2018-01-03': [
+        {
+            valueOf: 1514879456537,
+            who: 'Young',
+            startDate: '2017-12-29',
+            endDate: '2018-01-03',
+            summary: 'Young'
+        }
+    ],
+    
+}
+
+const eventHeight = 25
+
 class Scheduler extends Component {
     constructor(props) {
         super(props)
@@ -14,105 +273,7 @@ class Scheduler extends Component {
             startDate: '',
             endDate: '',
             summary: '',
-            events: {
-                ['2017-12-27']: [
-                    {
-                        valueOf: 1514362423935,
-                        who: 'Nam',
-                        startDate: '2017-12-27',
-                        endDate: '2017-12-27',
-                        summary: 'Nam'
-                    },
-                    {
-                        valueOf: 1514362444722,
-                        who: 'Young',
-                        startDate: '2017-12-27',
-                        endDate: '2017-12-27',
-                        summary: 'Young'
-                    }
-                ],
-                ['2017-11-27']: [
-                    {
-                        valueOf: 1514365608904,
-                        who: 'Young',
-                        startDate: '2017-11-27',
-                        endDate: '2017-11-27',
-                        summary: '123123123'
-                    }
-                ],
-                ['2017-12-05']: [
-                    {
-                        valueOf: 1514362457537,
-                        who: 'Young',
-                        startDate: '2017-12-05',
-                        endDate: '2017-12-12',
-                        summary: 'Young'
-                    }
-                ],
-                ['2017-12-06']: [
-                    {
-                        valueOf: 1514362457537,
-                        who: 'Young',
-                        startDate: '2017-12-05',
-                        endDate: '2017-12-12',
-                        summary: 'Young'
-                    }
-                ],
-                ['2017-12-07']: [
-                    {
-                        valueOf: 1514362457537,
-                        who: 'Young',
-                        startDate: '2017-12-05',
-                        endDate: '2017-12-12',
-                        summary: 'Young'
-                    }
-                ],
-                ['2017-12-08']: [
-                    {
-                        valueOf: 1514362457537,
-                        who: 'Young',
-                        startDate: '2017-12-05',
-                        endDate: '2017-12-12',
-                        summary: 'Young'
-                    }
-                ],
-                ['2017-12-09']: [
-                    {
-                        valueOf: 1514362457537,
-                        who: 'Young',
-                        startDate: '2017-12-05',
-                        endDate: '2017-12-12',
-                        summary: 'Young'
-                    }
-                ],
-                ['2017-12-10']: [
-                    {
-                        valueOf: 1514362457537,
-                        who: 'Young',
-                        startDate: '2017-12-05',
-                        endDate: '2017-12-12',
-                        summary: 'Young'
-                    }
-                ],
-                ['2017-12-11']: [
-                    {
-                        valueOf: 1514362457537,
-                        who: 'Young',
-                        startDate: '2017-12-05',
-                        endDate: '2017-12-12',
-                        summary: 'Young'
-                    }
-                ],
-                ['2017-12-12']: [
-                    {
-                        valueOf: 1514362457537,
-                        who: 'Young',
-                        startDate: '2017-12-05',
-                        endDate: '2017-12-12',
-                        summary: 'Young'
-                    }
-                ]
-            }
+            events: data
         }
     }
 
@@ -126,7 +287,9 @@ class Scheduler extends Component {
         const { who, startDate, endDate, summary } = this.state
 
         if (!this.state.events[startDate]) {
-            this.state.events[startDate] = []
+            this.setState({
+                [startDate]: []
+            })
         }
 
         this.setState({
@@ -249,6 +412,7 @@ class Scheduler extends Component {
 class Calendar extends Component {
     render() {
         const { year, month, day } = this.props.date
+        const [initYear, initMonth, initDay] = [year, month, day]
         const events = this.props.events
         const date = new Date(year, month - 1, 1)
         const lastDateArr = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
@@ -256,6 +420,8 @@ class Calendar extends Component {
             lastDateArr[1] = 29;
         
         const lastDate = lastDateArr[month - 1]
+        let prevLastDate
+        let nextLastDate
         const currentDay = date.getDay()
         const totalWeek = Math.ceil((currentDay + lastDate) / 7)
 
@@ -271,13 +437,13 @@ class Calendar extends Component {
         if (currentDay > 0) {
             const newMonth = month - 1 === 0 ? 12 : month - 1
             const newYear = month - 1 === 0 ? year - 1 : year
-            const newLastDateArr = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
+            prevLastDate = lastDateArr[newMonth - 1]
             for (let i = 0; i < currentDay; i++) {
                 newData.splice(0, 0, {
                     year: String(newYear),
                     month: addLeadingZero(newMonth),
-                    day: addLeadingZero(newLastDateArr[newMonth - 1] - i),
+                    day: addLeadingZero(lastDateArr[newMonth - 1] - i),
 
                     // 이전 달
                     pm: true
@@ -289,8 +455,8 @@ class Calendar extends Component {
         if (newDataLen % 7 !== 0) {
             const newMonth = month + 1 === 13 ? 1 : month + 1
             const newYear = month + 1 === 13 ? year + 1 : year
-            const newLastDateArr = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
+            nextLastDate = lastDateArr[newMonth - 1]
             for (let i = 0; i < 7 - (newDataLen % 7); i++) {
                 newData.push({
                     year: String(newYear),
@@ -303,6 +469,7 @@ class Calendar extends Component {
             }
         }
 
+        const eventGrid = []
         const weekDates = []
         const weekEvents = []
         let weekDate
@@ -310,6 +477,13 @@ class Calendar extends Component {
         let weekLastDate
         let continueEvent
         
+        for (let i = 0; i < totalWeek; i++) {
+            eventGrid[i] = []
+            for (let j = 0; j < 7; j++) {
+                eventGrid[i][j] = []
+            }
+        }
+
         for (let i = 0; i < totalWeek; i++) {
             weekDate = newData.slice(i * 7, (i + 1) * 7)
             weekDates.push(weekDate)
@@ -323,6 +497,7 @@ class Calendar extends Component {
             for (let j = 0; j < 7; j++) {
                 const { year, month, day } = weekDate[j]
                 const dateStr = `${year}-${month}-${day}`
+                const eventGridCell = eventGrid[i][j]
           
                 if (events[dateStr]) {
                     const eventArr = events[dateStr]
@@ -333,14 +508,13 @@ class Calendar extends Component {
                         const { startDate, endDate, valueOf } = event
 
                         if (continueEvent[valueOf]) continue
-                        
+
                         // continue event
-                        if (startDate != endDate) {
+                        if (startDate !== endDate) {
                             const [startYear, startMonth, startDay] = [year, month, day]
                             const [endYear, endMonth, endDay] = endDate.split('-')
 
-                            if (startYear === endYear && startMonth === endMonth) {
-                                
+                            if (startYear === endYear && startMonth === endMonth) {   
                                 let diff = parseInt(endDay, 10) - parseInt(startDay, 10)
                                 if (diff + j > 7 - j) {
                                     diff = 7 - j
@@ -352,10 +526,53 @@ class Calendar extends Component {
                                 event.width = diff
 
                                 continueEvent[valueOf] = true
+                            } else {
+                                let diffLastDate
+                                if (parseInt(startYear, 10) < initYear || parseInt(startMonth, 10) < initMonth) {
+                                    diffLastDate = prevLastDate
+                                } else {
+                                    diffLastDate = lastDate
+                                }
+
+                                diffLastDate - parseInt(startDay)
+
+                                let diff = diffLastDate - parseInt(startDay, 10) + parseInt(endDay, 10)
+                                if (diff + j > 7 - j) {
+                                    diff = 7 - j
+                                } else {
+                                    diff = diff + 1
+                                }
+
+                                event.display = true
+                                event.width = diff
+
+                                continueEvent[valueOf] = true
                             }
+
+                            event.row = 0
                         } else {
+                            let isFind = false
+                            let row = 0
+                            let eventGridCellLen = 0
+
+                            eventGridCell.forEach((isUsed, index) => {
+                                if (!isUsed) {
+                                    isFind = true
+                                    eventGridCell[index] = true
+                                    row = index
+                                }
+                                eventGridCellLen++
+                            })
+
+                            if (!isFind) {
+                                eventGridCell[0] = true
+                                row = eventGridCellLen
+                            }
+                            
+
                             event.display = true
                             event.width = 1
+                            event.row = row
                         }
                     }
 
@@ -408,13 +625,16 @@ class Day extends Component {
         const eventRender = []
         let i = 0
         event.forEach((data, index) => {
-            const { startDate, endDate, summary, who, display, width } = data
+            const { startDate, endDate, summary, who, display, width, row } = data
             
             if (!display) return true
 
             let classStr = `event-${width}-7 event-pnl`
+            let styles = {
+                top: (row * eventHeight) + 'px'
+            }
             eventRender.push((
-                <div className={classStr} key={index}>{data.summary}</div>
+                <div className={classStr} style={styles} key={index}>{data.summary}</div>
             ))
             i++
         })
