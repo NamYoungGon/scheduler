@@ -1,21 +1,24 @@
 import React, { Component } from 'react';
 
 import Scheduler from './../components/Scheduler'
+import { getDate } from './../lib/date';
 
 class SchedulerContainer extends Component {
     constructor(props) {
-        super(props);
-        
+        super(props)
+
+        const { year, month, day } = getDate()
+
         this.state = {
             date: {
-                year: 2017,
-                month: 12,
-                day: 26
+                year,
+                month,
+                day
             },
             selectedDate: {
-                year: 2017,
-                month: 12,
-                day: 26   
+                year,
+                month,
+                day   
             }
         }
     }

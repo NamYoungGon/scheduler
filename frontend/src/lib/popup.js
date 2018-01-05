@@ -18,7 +18,19 @@ function setDimmer(show) {
     document.querySelector('.dimmer').setAttribute('aria-hidden', !show)
 }
 
+function dimmerClick(callback) {
+    const dimmer = document.querySelector('.dimmer')
+    const func = function () {
+        callback()
+        dimmer.removeEventListener('click', func)
+    }
+ 
+    dimmer.removeEventListener('click', func)
+    dimmer.addEventListener('click', func)
+}
+
 module.exports = {
     setDimmer,
-    setPopup
+    setPopup,
+    dimmerClick
 }

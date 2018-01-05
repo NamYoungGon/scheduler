@@ -1,14 +1,25 @@
 import React, { Component } from 'react';
+import $ from 'jquery';
 
-import { addLeadingZero } from './../../lib/time';
+import { addLeadingZero } from './../../lib/date';
 
 const eventHeight = 25
 
 class Calendar extends Component {
+    componentDidMount() {
+        const { handleClickOpenEventPopup } = this.props
+        $('.calendar-tbody').on('click', 'td', function (e) {
+            const { target } = e
+            if (!target.classList.contains('event-pnl')) {
+                handleClickOpenEventPopup({ date: this.dataset.date })
+            }
+        })
+    }
+
     render() {
+        const { users, events } = this.props
         const { year, month } = this.props.date
         const [initYear, initMonth] = [year, month]
-        const events = this.props.events
         const date = new Date(year, month - 1, 1)
         const lastDateArr = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
         if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0)
@@ -207,6 +218,14 @@ class Calendar extends Component {
                             event.width = 1
                             event.row = row
                         }
+
+                        let tmpColor = users.findIndex((tmpData, index) => {
+                            if (tmpData.no !== parseInt(event.who, 10))
+                                return false
+                            return true
+                        })
+                    
+                        event.color = users[tmpColor].color
                     }
 
                     weekEvent[j] = eventArr
@@ -218,11 +237,11 @@ class Calendar extends Component {
 
         const calendar = []
         for (let i = 0; i < totalWeek; i++) {
-            calendar.push(<Week key={i} dates={weekDates[i]} events={weekEvents[i]} />)
+            calendar.push(<Week key={i} dates={weekDates[i]} events={weekEvents[i]} users={users} />)
         }
 
         return (
-            <tbody>
+            <tbody className="calendar-tbody">
                 {calendar}
             </tbody>
         )
@@ -232,17 +251,27 @@ class Calendar extends Component {
 class Week extends Component {
     render() {
         const { dates, events } = this.props
-        const week = [];
+        const week = []
+        let trHeight = 100
+        let maxEventSize = 0
 
         for (var i = 0; i < 7; i++) {
             const event = events[i]
             const date = dates[i]
 
+            const eventLen = event.length
+            maxEventSize = eventLen > maxEventSize ? eventLen : maxEventSize
+
             week.push(<Day key={i} date={date} event={event} />)
         }
 
+        trHeight = (eventHeight * maxEventSize) + 25 > trHeight ? (eventHeight * maxEventSize) + 25 : trHeight
+        const styles = {
+            height: `${trHeight}px`
+        }
+
         return (
-            <tr>
+            <tr style={styles}>
                 {week}
             </tr>
         )
@@ -252,18 +281,20 @@ class Week extends Component {
 class Day extends Component {
     render() {
         const { date, event } = this.props
-        const { day, pm, nm } = date
+        const { year, month, day, pm, nm } = date
+        const dataDate = `${year}-${month}-${day}`
         const dayClass = pm || nm ? 'dim' : ''
 
         const eventRender = []
         event.forEach((data, index) => {
-            const { summary, display, width, row } = data
+            const { summary, display, width, row, color } = data
             
             if (!display) return true
 
             let classStr = `event-${width}-7 event-pnl`
             let styles = {
-                top: (row * eventHeight) + 'px'
+                top: (row * eventHeight) + 'px',
+                backgroundColor: color
             }
             eventRender.push((
                 <div className={classStr} style={styles} key={index}>{summary}</div>
@@ -271,7 +302,7 @@ class Day extends Component {
         })
 
         return (
-            <td>
+            <td data-date={dataDate}>
                 <p><span className={dayClass}>{day}</span></p>
                 {eventRender}
             </td>

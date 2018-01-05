@@ -39,10 +39,15 @@
     position: relative;
 }
 
-input.date {
-    width: 94px;
+input[type=date] {
+    width: 160px;
 }
 
 button + button, button + span, span + button {
     margin-left: 5px;
+}
+
+select {
+    height: 30px;
+    padding: 0 4px;
 }

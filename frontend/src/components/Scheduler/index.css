@@ -1,3 +1,37 @@
+.calendar-wrap {
+    
+}
+
+.calendar-wrap > .calendar-pnl {
+    margin-right: 200px;
+}
+
+.calendar-wrap > .side-pnl {
+    width: 200px;
+    float: right;
+}
+
+.side-pnl ul {
+    list-style: none;
+}
+
+.side-pnl ul li {
+    padding: 2px;
+    line-height: 20px;
+}
+
+.side-pnl ul li .user-event-color {
+    float: left;
+    width: 5px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.side-pnl ul li .user-name {
+    padding-left: 5px;
+    font-weight: bold;
+}
+
 .calendar-table table {
     width: 100%;
 }
@@ -11,15 +45,29 @@
     padding: 2px 0 0;
     vertical-align: top;
     position: relative;
+    cursor: pointer;
+}
+.calendar-table td:hover {
+    background: rgb(236, 231, 231)
+}
+
+.calendar-table td p span.dim {
+    color: #bfbfbf;
 }
 
 .event-pnl {
     height: 22px;
-    margin: 0;
-    margin-top: 25px;
+    margin: 25px 0 0 0;
+    padding: 0 2px;
+    border-radius: 3px;
+    color: #fff;
     position: absolute;
     background-color: rgb(255, 240, 240);
     z-index: 1;
+}
+
+.event-pnl p {
+    margin: 0;
 }
 
 .event-1-7 { width: 99%; }
@@ -30,10 +78,17 @@
 .event-6-7 { width: 599%; }
 .event-7-7 { width: 699%; }
 
-span.dim {
-    color: #bfbfbf;
+
+select {
+    width: 100%;
 }
 
 .popup-scheduler {
-    width: 400px;
+    width: 475px;
+}
+
+.color-picker-popup {
+    position: absolute;
+    top: -1000px;
+    left: -1000px;
 }
