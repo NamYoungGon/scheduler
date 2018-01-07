@@ -14,11 +14,6 @@ class SchedulerContainer extends Component {
                 year,
                 month,
                 day
-            },
-            selectedDate: {
-                year,
-                month,
-                day   
             }
         }
     }

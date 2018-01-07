@@ -51,3 +51,26 @@ select {
     height: 30px;
     padding: 0 4px;
 }
+
+.b-lv-3 {
+    height: 20px;
+    padding: 0 6px;
+}
+
+.f-lv-1 {
+    
+}
+.f-lv-2 {
+
+}
+.f-lv-3 {
+    font-weight: bold;
+    display: inline-block;
+    line-height: 24px;
+}
+.f-lv-4 {
+
+}
+.f-lv-5 {
+
+}

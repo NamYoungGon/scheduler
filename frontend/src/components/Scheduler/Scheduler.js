@@ -60,7 +60,11 @@ class Scheduler extends Component {
                 endDate: '',
                 summary: ''
             },
-            events: {}
+            events: {},
+            userInput: {
+                display: false,
+                value: ''
+            }
         }
     }
     
@@ -215,10 +219,63 @@ class Scheduler extends Component {
         })
     }
 
+    handleClickAddUser = () => {
+        this.setState({
+            userInput: update(
+                this.state.userInput, {
+                    display: {
+                        $set: !this.state.userInput.display
+                    }
+                }
+            )
+        })
+    }
+
+    handleChangeUserInput = e => {
+        const { value } = e.target
+
+        this.setState({
+            userInput: update(
+                this.state.userInput, {
+                    value: {
+                        $set: value
+                    }
+                }
+            )
+        })
+    }
+
+    handleKeyPressUserInput = e => {
+        const keyCode = e.keyCode
+
+        if (keyCode === 13) {
+            this.setState({
+                users: update(
+                    this.state.users, {
+                        $push: [
+                            {
+                                no: this.state.users.length + 1,
+                                name: this.state.userInput.value,
+                                color: '#000',
+                            }
+                        ]
+                    }
+                ),
+                userInput: update(
+                    this.state.userInput, {
+                        value: {
+                            $set: ''
+                        }
+                    }
+                )
+            })
+        }
+    }
+
     render() {
         const { handlePrevMonth, handleNextMonth } = this.props
         const { year, month } = this.props.date
-        const { users } = this.state
+        const { users, userInput } = this.state
         
         const userListOptions = users.map((user, index) => {
             const { no, name } = user
@@ -241,6 +298,11 @@ class Scheduler extends Component {
             )
         })
 
+        const displayUserInput = userInput.display === false ? null : (
+            <div className="display-user-input">
+                <input type="text" value={this.state.userInput.value} onChange={this.handleChangeUserInput} onKeyDown={this.handleKeyPressUserInput} />
+            </div>            
+        )
         return (
             <div>
                 <div className="toolbar">
@@ -253,9 +315,15 @@ class Scheduler extends Component {
                 </div>
                 <div className="calendar-wrap">
                     <div className="side-pnl">
-                        <ul>
-                            {userList}
-                        </ul>
+                        <div className="side-user-pnl">
+                            <div className="user-list-header">
+                                <div className="f-lv-3">User</div><button className="b-lv-3 add-user" onClick={this.handleClickAddUser}>+</button>
+                                {displayUserInput}
+                            </div>
+                            <ul>
+                                {userList}
+                            </ul>
+                        </div>
                     </div>
                     <div className="calendar-pnl">
                         <div className="calendar-outer-pnl">
