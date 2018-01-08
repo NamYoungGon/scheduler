@@ -64,32 +64,63 @@ class Scheduler extends Component {
             userInput: {
                 display: false,
                 value: ''
+            },
+            popup: {
+                display: false,
+                type: 'add' // update
             }
         }
     }
     
-    handleClickOpenEventPopup = (settion = {}) => {
+    handleClickOpenEventPopup = (setting = {}) => {
         this.clearEventInput()
         setPopup('popup-add-event', true)
 
-        if (settion.date) {
-            this.setState({
+        let stateData = {}
+
+        if (setting.date) {
+            stateData = {
                 event: update(
                     this.state.event, {
                         startDate: {
-                            $set: settion.date
+                            $set: setting.date
                         },
                         endDate: {
-                            $set: settion.date
+                            $set: setting.date
                         }
                     }
-                )
-            })
+                ),
+                popup: {
+                    display: true,
+                    type: 'add'
+                }
+            }
+        } else if (setting.update) {
+            stateData = {
+                event: setting.update,
+                popup: {
+                    display: true,
+                    type: 'update',
+                    startDate: setting.update.startDate,
+                    endDate: setting.update.endDate,
+                    dvo: setting.update.dvo
+                }
+            }
+        } else {
+            stateData = {
+                popup: {
+                    display: false,
+                    type: 'add'
+                }
+            }  
         }
+
+        this.setState(stateData)
     }
     
     handleClickSaveEvent = () => {
-        const { who, startDate, endDate, summary } = this.state.event
+        const { who, startDate, endDate, summary, dvo } = this.state.event
+        const { type = 'add' } = this.state.popup
 
         if (who === '' || who === '0') {
             alert('\'Who\' is not selected.')
@@ -115,12 +146,17 @@ class Scheduler extends Component {
         let initEndMonth = parseInt(endMonth, 10)
         let initEndDay = parseInt(endDay, 10)
         let newEvents = {}
+        
         let newEvent = {
             startDate,
             endDate,
             who,
             summary,
-            dvo: new Date().valueOf()
+            dvo: dvo ? dvo : new Date().valueOf()
+        }
+
+        if (type === 'update') {
+            this.deleteEvent(false)
         }
 
         const lastDateArr = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
@@ -137,7 +173,7 @@ class Scheduler extends Component {
                     let completeDate = `${iYear}-${addLeadingZero(jMonth)}-${addLeadingZero(kDay)}`
                     if (!this.state.events[completeDate])
                         this.state.events[completeDate] = []
-                    
+
                     newEvents[completeDate] = {
                         $push: [Object.assign({}, newEvent)]
                     }
@@ -146,14 +182,85 @@ class Scheduler extends Component {
         }
 
         this.setState({
-            events: update(this.state.events, newEvents)
+            events: update(this.state.events, newEvents),
+            popup: {
+                display: false,
+                type: 'add'
+            }
         })
 
         setPopup('popup-add-event', false)
         this.clearEventInput()
     }
+
+    deleteEvent = (render = true) => {
+        const { events, popup } = this.state
+        const { startDate, endDate, dvo } = popup
+
+        let [startYear, startMonth, startDay] = startDate.split('-')
+        let initStartYear = parseInt(startYear, 10)
+        let initStartMonth = parseInt(startMonth, 10)
+        let initStartDay = parseInt(startDay, 10)
+        let [endYear, endMonth, endDay] = endDate.split('-')
+        let initEndYear = parseInt(endYear, 10)
+        let initEndMonth = parseInt(endMonth, 10)
+        let initEndDay = parseInt(endDay, 10)
+        let newEvents = {}
+
+        const lastDateArr = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        for (let iYear = initStartYear; iYear <= initEndYear; iYear++) {
+            if ((iYear % 4 === 0 && iYear % 100 !== 0) || iYear % 400 === 0)
+                lastDateArr[1] = 29;
+
+            let jMonth = initStartYear === iYear ? initStartMonth : 1
+            let jEndMonth = initEndYear === iYear ? initEndMonth : 12
+            for (; jMonth <= jEndMonth; jMonth++) {
+                let kDay = (initStartYear === iYear && initStartMonth === jMonth) ? initStartDay : 1
+                let kEndDay = (initEndYear === iYear && initEndMonth === jMonth) ? initEndDay : lastDateArr[jMonth - 1]
+                for (; kDay <= kEndDay; kDay++) {
+                    let completeDate = `${iYear}-${addLeadingZero(jMonth)}-${addLeadingZero(kDay)}`
+                    const index = events[completeDate].findIndex((data) => {
+                        if (data.dvo === dvo) {
+                            return true
+                        }
+                    })
+
+                    if (render === false) {
+                        events[completeDate].splice(index, 1)
+                    } else {
+                        newEvents[completeDate] = {
+                            $splice: [[index, 1]]
+                        }
+                    }
+                }
+            }
+        }
+
+        if (render === true) {
+            this.setState({
+                events: update(this.state.events, newEvents),
+                popup: {
+                    display: false,
+                    type: 'update'
+                }
+            })
+        }
+    }
+
+    handleClickDeleteEvent = () => {
+        this.deleteEvent()
+        setPopup('popup-add-event', false)
+        this.clearEventInput()
+    }
     
     handleClickCloseEventPopup = () => {
+        this.setState({
+            popup: {
+                display: false,
+                type: 'add'
+            }
+        })
+
         setPopup('popup-add-event', false)
     }
 
@@ -275,7 +382,7 @@ class Scheduler extends Component {
     render() {
         const { handlePrevMonth, handleNextMonth } = this.props
         const { year, month } = this.props.date
-        const { users, userInput } = this.state
+        const { users, userInput, popup } = this.state
         
         const userListOptions = users.map((user, index) => {
             const { no, name } = user
@@ -306,14 +413,14 @@ class Scheduler extends Component {
         return (
             <div>
                 <div className="toolbar">
-                    <button onClick={handlePrevMonth}>◀</button>
-                    <button onClick={handleNextMonth}>▶</button>
-                    <button onClick={this.handleClickOpenEventPopup}>Add Event</button>
-                    <span>
+                    <button className="b-lv-3" onClick={handlePrevMonth}>◀</button>
+                    <div className="f-lv-2">
                         {year} {addLeadingZero(month)}
-                    </span>
+                    </div>
+                    <button className="b-lv-3" onClick={handleNextMonth}>▶</button>
+                    <button className="b-lv-2 open-event-popup" onClick={this.handleClickOpenEventPopup}>Add Event</button>
                 </div>
-                <div className="calendar-wrap">
+                <div className="cal-wrap">
                     <div className="side-pnl">
                         <div className="side-user-pnl">
                             <div className="user-list-header">
@@ -325,10 +432,10 @@ class Scheduler extends Component {
                             </ul>
                         </div>
                     </div>
-                    <div className="calendar-pnl">
-                        <div className="calendar-outer-pnl">
-                            <div className="calendar-inner-pnl">
-                                <div className="calendar-table">
+                    <div className="cal-pnl">
+                        <div className="cal-outer-pnl">
+                            <div className="cal-inner-pnl">
+                                <div className="cal-table">
                                     <table>
                                         <colgroup>
                                             <col width="10%" />
@@ -341,13 +448,13 @@ class Scheduler extends Component {
                                         </colgroup>
                                         <thead>
                                             <tr>
-                                                <th>일</th>
-                                                <th>월</th>
-                                                <th>화</th>
-                                                <th>수</th>
-                                                <th>목</th>
-                                                <th>금</th>
-                                                <th>토</th>
+                                                <th>Sun</th>
+                                                <th>Mon</th>
+                                                <th>Tue</th>
+                                                <th>Wed</th>
+                                                <th>Thu</th>
+                                                <th>Fri</th>
+                                                <th>Sat</th>
                                             </tr>
                                         </thead>
                                         <Calendar date={this.props.date} events={this.state.events} users={this.state.users} handleClickOpenEventPopup={this.handleClickOpenEventPopup} />
@@ -360,7 +467,7 @@ class Scheduler extends Component {
                 <div className="popup popup-scheduler" id="popup-add-event">
                     <div className="popup-inner">
                         <div className="popup-title">
-                            <h3>Add Event</h3>
+                            <h3>{popup.type} event</h3>
                         </div>
                         <div className="popup-content">
                             <div className="field-group f-r">
@@ -384,6 +491,9 @@ class Scheduler extends Component {
                             <div className="popup-footer-inner">
                                 <div className="f-r">
                                     <button onClick={this.handleClickSaveEvent}>Save</button>
+                                    {
+                                        popup.type === 'update' ? <button className="important" onClick={this.handleClickDeleteEvent}>Delete</button> : null
+                                    }
                                     <button onClick={this.handleClickCloseEventPopup}>Close</button>
                                 </div>
                             </div>

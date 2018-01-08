@@ -1,12 +1,27 @@
-.calendar-wrap {
-    
+.toolbar {
+    text-align: center;
+    margin: 20px 0;
 }
 
-.calendar-wrap > .calendar-pnl {
+.toolbar .f-lv-2 {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.open-event-popup {
+    float: right;
     margin-right: 200px;
 }
 
-.calendar-wrap > .side-pnl {
+.cal-wrap {
+    
+}
+
+.cal-wrap > .cal-pnl {
+    margin-right: 200px;
+}
+
+.cal-wrap > .side-pnl {
     width: 200px;
     float: right;
 }
@@ -47,26 +62,47 @@
     font-weight: bold;
 }
 
-.calendar-table table {
+.cal-table table {
     width: 100%;
 }
 
-.calendar-table th {
+.cal-table th {
     text-align: center;
 }
 
-.calendar-table td {
+.cal-table td {
     height: 100px;
     padding: 2px 0 0;
+    /* border: 1px solid #ececec; */
     vertical-align: top;
     position: relative;
     cursor: pointer;
 }
-.calendar-table td:hover {
-    /* background: rgb(236, 231, 231) */
+.cal-table td:first-child {
+    border-left: 0;
+}
+.cal-table td:last-child {
+    border-right: 0;
 }
 
-.calendar-table td p span.dim {
+.cal-day {
+    padding: 0 5px 0 2px;
+}
+
+.cal-day-name {
+    font-size: 12px;
+    float: right;
+}
+
+.cal-sat {
+    color: #7575ff;
+}
+
+.cal-sun, .cal-hol {
+    color: #e25252;
+}
+
+.cal-table td p span.dim {
     color: #bfbfbf;
 }
 
